@@ -1,0 +1,138 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/prism.css">
+    </head>
+    <body>
+
+        <div class="fonts-list">
+            <p>Monospaced fonts:</p>
+
+        </div>
+
+<pre><code class="language-javascript">
+    (function (root, factory) {
+        if (typeof define === 'function' && define.amd) {
+            // AMD
+            define(factory);
+        } else if (typeof exports === 'object') {
+            // Node, CommonJS-like
+            module.exports = factory();
+        } else {
+            // Browser globals (root is window)
+            root.rafQueue = factory();
+        }
+    }(this, function () {
+
+        /**
+         * requestAnimationFrame polyfill from Paul Irish
+         * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+         * MIT license
+         */
+        var lastTime = 0,
+                vendors = ['ms', 'moz', 'webkit', 'o'];
+
+        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                    || window[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame) {
+            // Polyfill for IE8-9, Android <= 4.3
+            window.requestAnimationFrame = function(fn) {
+
+                var currTime = +(new Date()),
+                        timeToCall = Math.max(0, 16 - (currTime - lastTime)),
+                        id = setTimeout(function() {
+                            fn(currTime + timeToCall);
+                        }, timeToCall);
+
+                lastTime = currTime + timeToCall;
+
+                return id;
+
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+        }
+
+        /**
+         * A wrapper for the consequentially execution heavy js functions using requestAnimationFrame
+         */
+        var rafQueue = function() {
+
+            /**
+             * Container for callbacks with their's context
+             * @type {Array}
+             */
+            var stack = [];
+
+            /**
+             * Add callback with ctx to stack
+             * @param {Function} fn - callback
+             * @param {Object} [ctx] - context
+             * @returns {Object} *
+             */
+            this.add = function(fn, ctx) {
+                stack.push({ fn: fn, ctx: ctx });
+                return this;
+            };
+
+            /**
+             * Consequentially runs all callbacks from stack
+             */
+            this.run = function() {
+
+                var raf = window.requestAnimationFrame,
+                        runner,
+                // runs callback + recursively calls itself in next frame
+                        onNextFrame = function() {
+
+                            if (stack.length === 0) {
+                                return;
+                            }
+
+                            runner = stack.shift();
+                            if (runner.ctx) {
+                                runner.fn.call(runner.ctx);
+                            } else {
+                                runner.fn();
+                            }
+
+                            raf(onNextFrame);
+
+                        };
+
+                // first run. Run through one frame
+                raf(function() {
+                    raf(onNextFrame);
+                });
+
+            };
+
+        };
+
+        return rafQueue;
+
+    }));
+</code></pre>
+
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/vendor/lodash.min.js"></script>
+        <script src="js/vendor/prism.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
