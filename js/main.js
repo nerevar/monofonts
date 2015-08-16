@@ -39,7 +39,12 @@ $(function() {
         var item = $(this),
             font = item.attr('value');
 
-        console.log('select font:', item.attr('value'));
+        console.log('select font:', font);
+
+        if (font === 'monospace') {
+            // hack for monospace height http://code.stephenmorley.org/html-and-css/fixing-browsers-broken-monospace-font-handling/
+            font += ', ' + font;
+        }
 
         $('code, pre').css('font-family', font);
     });
