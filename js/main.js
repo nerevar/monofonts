@@ -1,6 +1,7 @@
 $(function() {
     var fonts = [
         'monospace',
+        'Courier New',
         //'Source Code Pro',
         //'Consolas',
         //'Ubuntu Mono',
