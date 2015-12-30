@@ -208,3 +208,8 @@ textarea {
 {
     display: block;
 }
+
+pre[class*="language-"]
+{
+    margin: 0;
+}
