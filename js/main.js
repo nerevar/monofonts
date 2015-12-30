@@ -3,23 +3,25 @@ $(function() {
         'monospace',
         'Courier New',
         'Source Code Pro',
-        //'Consolas',
-        'Ubuntu Mono',
-        'Inconsolata',
         'Monaco',
-        //'DejaVu Sans Mono',
-        'Anonymous Pro',
         'Menlo',
-        //'Envy Code R',
         'Droid Sans Mono',
+        'Andale Mono',
+        'PT Mono',
+        'Anonymous Pro',
+        'Inconsolata',
+        'Ubuntu Mono'
+
+        //'Consolas',
+        //'DejaVu Sans Mono',
+        //'Envy Code R',
         //'Pragmata Pro',
         //'Liberation Mono',
         //'Monofur',
         //'Terminus',
         //'Lucida Console',
         //'Input',
-        'Andale Mono',
-        'PT Mono'
+
     ];
 
     _.forEach(fonts, function(font, idx) {
