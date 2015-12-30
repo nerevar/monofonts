@@ -2,24 +2,24 @@ $(function() {
     var fonts = [
         'monospace',
         'Courier New',
-        //'Source Code Pro',
+        'Source Code Pro',
         //'Consolas',
-        //'Ubuntu Mono',
-        //'Inconsolata-g',
-        //'Inconsolata',
+        'Ubuntu Mono',
+        'Inconsolata',
         'Monaco',
         //'DejaVu Sans Mono',
-        //'Anonymous Pro',
+        'Anonymous Pro',
         'Menlo',
         //'Envy Code R',
-        //'Droid Sans Mono',
+        'Droid Sans Mono',
         //'Pragmata Pro',
         //'Liberation Mono',
         //'Monofur',
         //'Terminus',
         //'Lucida Console',
         //'Input',
-        'Andale Mono'
+        'Andale Mono',
+        'PT Mono'
     ];
 
     _.forEach(fonts, function(font, idx) {
